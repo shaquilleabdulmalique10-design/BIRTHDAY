@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Birthday Link Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="pt-20 pb-12 px-4">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold gold-text text-center mb-8">🔧 Generator Test</h1>
+        
+        <div class="magic-card p-8 mb-8">
+            <h2 class="text-xl font-bold mb-4" style="color: #FFD700;">Test Form</h2>
+            
+            <div class="mb-4">
+                <label class="block font-semibold mb-2" style="color: #FFD700;">Name *</label>
+                <input type="text" id="testName" placeholder="Enter name" 
+                    class="luxury-input w-full px-4 py-3 rounded-lg">
+            </div>
+            
+            <div class="mb-4">
+                <label class="block font-semibold mb-2" style="color: #FFD700;">Message</label>
+                <textarea id="testMessage" rows="3" placeholder="Enter message"
+                    class="luxury-input w-full px-4 py-3 rounded-lg"></textarea>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block font-semibold mb-2" style="color: #FFD700;">From</label>
+                <input type="text" id="testSender" placeholder="Your name"
+                    class="luxury-input w-full px-4 py-3 rounded-lg">
+            </div>
+            
+            <button onclick="testGenerate()" class="btn-gold w-full py-3 rounded-lg font-bold">
+                <i class="fas fa-magic"></i> Generate Link
+            </button>
+        </div>
+        
+        <div id="testResult" class="hidden magic-card p-6">
+            <h3 class="text-lg font-bold mb-3" style="color: #FFD700;">Generated Link:</h3>
+            <div class="generated-link mb-4" id="testLinkDisplay"></div>
+            <button onclick="copyTestLink()" class="btn-gold px-4 py-2 rounded-lg">
+                <i class="fas fa-copy"></i> Copy
+            </button>
+        </div>
+        
+        <div id="testError" class="hidden luxury-panel p-4 mt-4" style="background: rgba(255, 68, 68, 0.1);">
+            <p style="color: #ff6666;" id="errorMessage"></p>
+        </div>
+    </div>
+    
+    <script>
+        // Simple test function
+        function testGenerate() {
+            const name = document.getElementById('testName').value.trim();
+            const message = document.getElementById('testMessage').value.trim();
+            const sender = document.getElementById('testSender').value.trim();
+            
+            if (!name) {
+                document.getElementById('testError').classList.remove('hidden');
+                document.getElementById('errorMessage').textContent = 'Please enter a name!';
+                return;
+            }
+            
+            const cardData = {
+                name: name,
+                message: message || 'Happy Birthday! 🎂',
+                sender: sender || 'Your Friends'
+            };
+            
+            const encodedData = btoa(encodeURIComponent(JSON.stringify(cardData)));
+            const currentUrl = window.location.href.split('?')[0].split('#')[0];
+            const magicLink = `${currentUrl}?magic=${encodedData}`;
+            
+            document.getElementById('testLinkDisplay').textContent = magicLink;
+            document.getElementById('testResult').classList.remove('hidden');
+            document.getElementById('testError').classList.add('hidden');
+            
+            console.log('✅ Link generated successfully!');
+            console.log('Magic Link:', magicLink);
+        }
+        
+        function copyTestLink() {
+            const link = document.getElementById('testLinkDisplay').textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                alert('✅ Link copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>

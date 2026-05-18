@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Birthday Link - Luxury Birthday</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="luxury-panel fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="home.html" class="flex items-center gap-2">
+                        <span class="text-2xl">✨</span>
+                        <span class="text-xl font-bold gold-text">Luxury Birthday</span>
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="home.html" class="nav-link">Home</a>
+                    <a href="generator.html" class="nav-link active">Create Link</a>
+                    <a href="reminders.html" class="nav-link">Reminders</a>
+                    <a href="gallery.html" class="nav-link">Gallery</a>
+                    <a href="about.html" class="nav-link">About</a>
+                </div>
+
+                <button class="md:hidden btn-gold px-3 py-2 rounded-lg" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden luxury-panel mt-2 mx-4 rounded-lg">
+            <div class="flex flex-col p-4 gap-2">
+                <a href="home.html" class="nav-link-mobile">Home</a>
+                <a href="generator.html" class="nav-link-mobile active">Create Link</a>
+                <a href="reminders.html" class="nav-link-mobile">Reminders</a>
+                <a href="gallery.html" class="nav-link-mobile">Gallery</a>
+                <a href="about.html" class="nav-link-mobile">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Audio Element for Birthday Song -->
+    <audio id="birthdaySong" preload="auto" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-happyrock.mp3" type="audio/mpeg">
+        <source src="https://pixabay.com/music/upbeat-happy-birthday-112187/" type="audio/mpeg">
+    </audio>
+
+    <!-- Generator View -->
+    <div id="generatorView" class="pt-20 pb-12 px-4 min-h-screen">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <div class="text-6xl sm:text-7xl mb-4">
+                    <span class="bounce-emoji">🎂</span>
+                    <span class="bounce-emoji" style="animation-delay: 0.2s;">🎉</span>
+                    <span class="bounce-emoji" style="animation-delay: 0.4s;">✨</span>
+                </div>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold gold-text glow-gold mb-4">
+                    Create Magical Birthday Links
+                </h1>
+                <p class="text-lg" style="color: rgba(255, 215, 0, 0.8);">
+                    Generate personalized birthday celebrations with music and confetti
+                </p>
+            </div>
+
+            <!-- Main Generator Card -->
+            <div class="magic-card p-6 sm:p-8 mb-8">
+                <!-- Quick Presets -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold mb-4" style="color: #FFD700;">
+                        <i class="fas fa-magic"></i> Quick Presets
+                    </h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
+                        <button onclick="setPreset('Dad')" class="preset-btn px-3 py-2 rounded-lg text-sm font-medium">Dad</button>
+                        <button onclick="setPreset('Mom')" class="preset-btn px-3 py-2 rounded-lg text-sm font-medium">Mom</button>
+                        <button onclick="setPreset('Sister')" class="preset-btn px-3 py-2 rounded-lg text-sm font-medium">Sister</button>
+                        <button onclick="setPreset('Brother')" class="preset-btn px-3 py-2 rounded-lg text-sm font-medium">Brother</button>
+                        <button onclick="setPreset('Grandma')" class="preset-btn px-3 py-2 rounded-lg text-sm font-medium">Grandma</button>
+                        <button onclick="setPreset('Grandpa')" class="preset-btn px-3 py-2 rounded-lg text-sm font-medium">Grandpa</button>
+                        <button onclick="setPreset('Best Friend')" class="preset-btn px-3 py-2 rounded-lg text-sm font-medium">Friend</button>
+                        <button onclick="setPreset('Wife')" class="preset-btn px-3 py-2 rounded-lg text-sm font-medium">Wife</button>
+                    </div>
+                </div>
+
+                <div class="gold-divider"></div>
+
+                <!-- Form Fields -->
+                <div class="space-y-6">
+                    <!-- Name Input -->
+                    <div>
+                        <label class="block font-semibold mb-2 text-sm" style="color: #FFD700;">
+                            <i class="fas fa-user"></i> Birthday Person's Name *
+                        </label>
+                        <input type="text" id="celebrantNameInput" placeholder="Enter their name..."
+                            class="luxury-input w-full px-4 py-3 rounded-lg text-base">
+                    </div>
+
+                    <!-- Birthday Date -->
+                    <div>
+                        <label class="block font-semibold mb-2 text-sm" style="color: #FFD700;">
+                            <i class="fas fa-calendar"></i> Birthday Date (Optional)
+                        </label>
+                        <input type="date" id="birthdayDate"
+                            class="luxury-input w-full px-4 py-3 rounded-lg text-base">
+                        <p class="text-xs mt-1" style="color: rgba(255, 215, 0, 0.6);">
+                            Used for reminder scheduling
+                        </p>
+                    </div>
+
+                    <!-- Message Input -->
+                    <div>
+                        <label class="block font-semibold mb-2 text-sm" style="color: #FFD700;">
+                            <i class="fas fa-heart"></i> Birthday Message
+                        </label>
+                        <textarea id="messageInput" rows="4" placeholder="Write your heartfelt birthday message..."
+                            class="luxury-input w-full px-4 py-3 rounded-lg text-base resize-none"></textarea>
+                    </div>
+
+                    <!-- Sender Input -->
+                    <div>
+                        <label class="block font-semibold mb-2 text-sm" style="color: #FFD700;">
+                            <i class="fas fa-signature"></i> From (Your Name)
+                        </label>
+                        <input type="text" id="senderInput" placeholder="Your name or 'Your Loved Ones'"
+                            class="luxury-input w-full px-4 py-3 rounded-lg text-base">
+                    </div>
+
+                    <!-- Generate Button -->
+                    <button onclick="generateMagicLink()" 
+                        class="btn-gold w-full py-4 rounded-lg text-lg font-bold">
+                        <i class="fas fa-magic"></i> Generate Magic Link
+                    </button>
+                </div>
+            </div>
+
+            <!-- Link Result Section -->
+            <div id="linkResult" class="hidden magic-card p-6 sm:p-8 mb-8">
+                <h3 class="text-xl font-bold mb-4" style="color: #FFD700;">
+                    <i class="fas fa-link"></i> Your Magic Birthday Link
+                </h3>
+                
+                <div class="generated-link mb-4" id="magicLinkDisplay"></div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+                    <button onclick="copyLink()" class="btn-gold px-4 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-copy"></i> Copy Link
+                    </button>
+                    <button onclick="testLink()" class="btn-black px-4 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-eye"></i> Preview
+                    </button>
+                    <button onclick="shareWhatsApp()" class="btn-black px-4 py-2 rounded-lg text-sm font-medium">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </button>
+                    <button onclick="shareEmail()" class="btn-black px-4 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-envelope"></i> Email
+                    </button>
+                </div>
+
+                <!-- Reminder Section -->
+                <div id="reminderSection" class="hidden luxury-panel p-4 mt-4">
+                    <h4 class="font-bold mb-3" style="color: #FFD700;">
+                        <i class="fas fa-bell"></i> Set a Reminder
+                    </h4>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="date" id="reminderDate" 
+                            class="luxury-input px-3 py-2 rounded-lg text-sm flex-1">
+                        <button onclick="setReminder()" 
+                            class="btn-gold px-4 py-2 rounded-lg text-sm font-medium">
+                            <i class="fas fa-plus"></i> Set Reminder
+                        </button>
+                    </div>
+                    <p class="text-xs mt-2" style="color: rgba(255, 215, 0, 0.6);">
+                        We'll remind you to send this link on the selected date
+                    </p>
+                </div>
+            </div>
+
+            <!-- No Link Message -->
+            <div id="noLinkYet" class="text-center py-8">
+                <i class="fas fa-magic text-6xl mb-4" style="color: rgba(255, 215, 0, 0.3);"></i>
+                <p style="color: rgba(255, 215, 0, 0.6);">Fill in the details above to generate your magic link</p>
+            </div>
+
+            <!-- Active Reminders Display -->
+            <div id="activeReminders"></div>
+
+            <!-- Link History Section -->
+            <div class="magic-card p-6 sm:p-8 mt-8">
+                <h3 class="text-xl font-bold mb-4" style="color: #FFD700;">
+                    <i class="fas fa-history"></i> Recent Links
+                </h3>
+                <div id="linkHistory">
+                    <!-- Link history will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Data Management Section -->
+            <div class="magic-card p-6 sm:p-8 mt-8">
+                <h3 class="text-xl font-bold mb-4" style="color: #FFD700;">
+                    <i class="fas fa-database"></i> Data Management
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <button onclick="exportData()" class="btn-gold px-4 py-3 rounded-lg font-semibold">
+                        <i class="fas fa-download"></i> Export Data
+                    </button>
+                    <label class="btn-black px-4 py-3 rounded-lg font-semibold text-center cursor-pointer">
+                        <i class="fas fa-upload"></i> Import Data
+                        <input type="file" accept=".json" onchange="importData(this)" class="hidden">
+                    </label>
+                    <button onclick="clearAllData()" class="btn-black px-4 py-3 rounded-lg font-semibold">
+                        <i class="fas fa-trash"></i> Clear All Data
+                    </button>
+                </div>
+                <p class="text-sm mt-4" style="color: rgba(255, 215, 0, 0.6);">
+                    <i class="fas fa-info-circle"></i> All your form data, generated links, and reminders are automatically saved to your browser's local storage.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Celebration View -->
+    <div id="celebrantView" class="hidden pt-20 pb-12 px-4 min-h-screen">
+        <!-- Navigation in Celebration View -->
+        <div class="fixed top-20 left-4 z-40">
+            <button onclick="goBackToHome()" 
+                class="home-button pulse-subtle px-4 py-3 rounded-full text-lg font-bold" 
+                style="color: #FFD700;">
+                <i class="fas fa-home"></i>
+            </button>
+        </div>
+
+        <div class="fixed top-20 right-4 z-40">
+            <button onclick="toggleSong()" 
+                class="music-player pulse-subtle px-4 py-3 rounded-full text-lg font-bold">
+                <i id="musicIcon" class="fas fa-music" style="color: #FFD700;"></i>
+            </button>
+        </div>
+
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="magic-card p-8 sm:p-12">
+                <div class="text-6xl sm:text-8xl mb-6">🎂🎉✨</div>
+                
+                <h1 id="celebrantName" class="text-3xl sm:text-4xl md:text-5xl font-bold gold-text glow-gold mb-6">
+                    Happy Birthday!
+                </h1>
+                
+                <div class="gold-divider"></div>
+                
+                <p id="celebrantMessage" class="text-lg sm:text-xl mb-8 leading-relaxed" 
+                   style="color: rgba(255, 215, 0, 0.9);">
+                    Your birthday message will appear here
+                </p>
+                
+                <div class="gold-divider"></div>
+                
+                <p id="celebrantSender" class="text-base sm:text-lg font-semibold" 
+                   style="color: #FFD700;">
+                    With love ❤️
+                </p>
+
+                <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="playConfettiAndSong()" 
+                        class="btn-gold px-6 py-3 rounded-full text-lg font-bold">
+                        <i class="fas fa-play"></i> Celebrate Again!
+                    </button>
+                    <button onclick="goBackToHome()" 
+                        class="btn-black px-6 py-3 rounded-full text-lg font-bold">
+                        <i class="fas fa-home"></i> Create Another
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="fixed top-20 right-6 z-50 space-y-3 pointer-events-none"></div>
+
+    <script src="navigation.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

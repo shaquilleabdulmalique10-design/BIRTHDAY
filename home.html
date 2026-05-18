@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Birthday - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="luxury-panel fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="home.html" class="flex items-center gap-2">
+                        <span class="text-2xl">✨</span>
+                        <span class="text-xl font-bold gold-text">Luxury Birthday</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="home.html" class="nav-link active">Home</a>
+                    <a href="generator.html" class="nav-link">Create Link</a>
+                    <a href="reminders.html" class="nav-link">Reminders</a>
+                    <a href="gallery.html" class="nav-link">Gallery</a>
+                    <a href="about.html" class="nav-link">About</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden btn-gold px-3 py-2 rounded-lg" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="hidden md:hidden luxury-panel mt-2 mx-4 rounded-lg">
+            <div class="flex flex-col p-4 gap-2">
+                <a href="home.html" class="nav-link-mobile active">Home</a>
+                <a href="generator.html" class="nav-link-mobile">Create Link</a>
+                <a href="reminders.html" class="nav-link-mobile">Reminders</a>
+                <a href="gallery.html" class="nav-link-mobile">Gallery</a>
+                <a href="about.html" class="nav-link-mobile">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-20 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <!-- Hero Content -->
+            <div class="mb-8">
+                <div class="text-6xl sm:text-7xl md:text-8xl mb-6">
+                    <span class="bounce-emoji">🎂</span>
+                    <span class="bounce-emoji" style="animation-delay: 0.2s;">🎉</span>
+                    <span class="bounce-emoji" style="animation-delay: 0.4s;">✨</span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold gold-text glow-gold mb-6">
+                    Create Unforgettable<br>Birthday Experiences
+                </h1>
+                
+                <p class="text-lg sm:text-xl md:text-2xl mb-8" style="color: rgba(255, 215, 0, 0.8);">
+                    Design luxury birthday celebrations with music, confetti, and stunning animations
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="generator.html" class="btn-gold px-8 py-4 rounded-full text-lg font-bold inline-flex items-center justify-center gap-2">
+                        <i class="fas fa-magic"></i> Create Birthday Link
+                    </a>
+                    <a href="about.html" class="btn-black px-8 py-4 rounded-full text-lg font-bold inline-flex items-center justify-center gap-2">
+                        <i class="fas fa-info-circle"></i> Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+                <!-- Feature 1 -->
+                <div class="luxury-panel p-6 hover-lift">
+                    <div class="text-4xl mb-4">🎵</div>
+                    <h3 class="text-xl font-bold mb-2" style="color: #FFD700;">Real Birthday Music</h3>
+                    <p style="color: rgba(255, 215, 0, 0.7);">Automatic birthday song with beautiful animations</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="luxury-panel p-6 hover-lift">
+                    <div class="text-4xl mb-4">🎊</div>
+                    <h3 class="text-xl font-bold mb-2" style="color: #FFD700;">Gold Confetti</h3>
+                    <p style="color: rgba(255, 215, 0, 0.7);">Stunning gold confetti and particle effects</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="luxury-panel p-6 hover-lift">
+                    <div class="text-4xl mb-4">🔔</div>
+                    <h3 class="text-xl font-bold mb-2" style="color: #FFD700;">Email Reminders</h3>
+                    <p style="color: rgba(255, 215, 0, 0.7);">Never miss a birthday with email notifications</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="luxury-panel p-6 hover-lift">
+                    <div class="text-4xl mb-4">📱</div>
+                    <h3 class="text-xl font-bold mb-2" style="color: #FFD700;">Fully Responsive</h3>
+                    <p style="color: rgba(255, 215, 0, 0.7);">Perfect on mobile, tablet, and desktop</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="luxury-panel p-6 hover-lift">
+                    <div class="text-4xl mb-4">🔗</div>
+                    <h3 class="text-xl font-bold mb-2" style="color: #FFD700;">Shareable Links</h3>
+                    <p style="color: rgba(255, 215, 0, 0.7);">Share via WhatsApp, Messenger, or Email</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="luxury-panel p-6 hover-lift">
+                    <div class="text-4xl mb-4">💎</div>
+                    <h3 class="text-xl font-bold mb-2" style="color: #FFD700;">Luxury Design</h3>
+                    <p style="color: rgba(255, 215, 0, 0.7);">Premium glassmorphic gold & black theme</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold gold-text text-center mb-12">
+                How It Works
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Step 1 -->
+                <div class="luxury-panel p-6 text-center">
+                    <div class="text-5xl mb-4">1️⃣</div>
+                    <h3 class="text-xl font-bold mb-2" style="color: #FFD700;">Fill Details</h3>
+                    <p style="color: rgba(255, 215, 0, 0.7);">Enter name, message, and birthday date</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="luxury-panel p-6 text-center">
+                    <div class="text-5xl mb-4">2️⃣</div>
+                    <h3 class="text-xl font-bold mb-2" style="color: #FFD700;">Generate Link</h3>
+                    <p style="color: rgba(255, 215, 0, 0.7);">Create your luxury birthday link</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="luxury-panel p-6 text-center">
+                    <div class="text-5xl mb-4">3️⃣</div>
+                    <h3 class="text-xl font-bold mb-2" style="color: #FFD700;">Set Reminder</h3>
+                    <p style="color: rgba(255, 215, 0, 0.7);">Get email reminder before birthday</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="luxury-panel p-6 text-center">
+                    <div class="text-5xl mb-4">4️⃣</div>
+                    <h3 class="text-xl font-bold mb-2" style="color: #FFD700;">Share & Celebrate</h3>
+                    <p style="color: rgba(255, 215, 0, 0.7);">Send link and make them smile!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center luxury-panel p-8 sm:p-12">
+            <h2 class="text-3xl sm:text-4xl font-bold gold-text mb-4">
+                Ready to Create Magic?
+            </h2>
+            <p class="text-lg sm:text-xl mb-8" style="color: rgba(255, 215, 0, 0.8);">
+                Start creating unforgettable birthday experiences today
+            </p>
+            <a href="generator.html" class="btn-gold px-8 py-4 rounded-full text-lg font-bold inline-flex items-center gap-2">
+                <i class="fas fa-rocket"></i> Get Started Now
+            </a>
+        </div>
+    </section>
+
+    <!-- Data Stats Section -->
+    <section class="py-12 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="luxury-panel p-6 sm:p-8">
+                <h2 class="text-2xl sm:text-3xl font-bold gold-text text-center mb-6">
+                    <i class="fas fa-chart-pie"></i> Your Data Dashboard
+                </h2>
+                <div id="dataStats" class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+                    <!-- Stats will be loaded dynamically -->
+                </div>
+                <div class="text-center">
+                    <a href="generator.html" class="btn-gold px-6 py-3 rounded-full font-semibold inline-flex items-center gap-2">
+                        <i class="fas fa-magic"></i> Create New Link
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="luxury-panel py-8 mt-20">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p style="color: rgba(255, 215, 0, 0.7);">
+                © 2024 Luxury Birthday. Made with <i class="fas fa-heart" style="color: #FFD700;"></i> for spreading joy
+            </p>
+        </div>
+    </footer>
+
+    <script src="navigation.js"></script>
+</body>
+</html>

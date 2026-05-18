@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Link Generator Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #000;
+            color: #FFD700;
+        }
+        .test-box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #FFD700;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #FFD700;
+            background: rgba(0, 0, 0, 0.5);
+            color: #FFD700;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #FFD700;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #FFA500;
+        }
+        .result {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #0F0;
+            color: #0F0;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            word-break: break-all;
+            display: none;
+        }
+        .error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #F00;
+            color: #F00;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .success {
+            color: #0F0;
+            font-weight: bold;
+        }
+        h1 { text-align: center; }
+        .status { margin: 10px 0; padding: 10px; background: rgba(255, 215, 0, 0.05); }
+    </style>
+</head>
+<body>
+    <h1>🎂 Simple Link Generator Test</h1>
+    
+    <div class="test-box">
+        <h2>Test Status</h2>
+        <div id="status" class="status">
+            <p>✅ Page loaded successfully</p>
+            <p id="jsStatus">⏳ Checking JavaScript...</p>
+            <p id="storageStatus">⏳ Checking localStorage...</p>
+        </div>
+    </div>
+
+    <div class="test-box">
+        <h2>Generate Test Link</h2>
+        <label>Name:</label>
+        <input type="text" id="testName" value="Test Person" placeholder="Enter name">
+        
+        <label>Message:</label>
+        <textarea id="testMessage" rows="3" placeholder="Enter message">Happy Birthday! This is a test message.</textarea>
+        
+        <label>From:</label>
+        <input type="text" id="testSender" value="Test Sender" placeholder="Your name">
+        
+        <button onclick="testGenerateLink()">🎉 Generate Test Link</button>
+    </div>
+
+    <div id="result" class="result">
+        <h3>✅ Link Generated Successfully!</h3>
+        <p><strong>Your Magic Link:</strong></p>
+        <p id="generatedLink" style="font-size: 14px;"></p>
+        <button onclick="copyTestLink()">📋 Copy Link</button>
+        <button onclick="openTestLink()">👁️ Open Link</button>
+    </div>
+
+    <div class="test-box">
+        <h2>Debug Information</h2>
+        <div id="debugInfo" style="font-size: 12px; font-family: monospace;"></div>
+    </div>
+
+    <script>
+        // Check JavaScript
+        document.getElementById('jsStatus').innerHTML = '✅ JavaScript is working';
+        
+        // Check localStorage
+        try {
+            localStorage.setItem('test', 'test');
+            localStorage.removeItem('test');
+            document.getElementById('storageStatus').innerHTML = '✅ localStorage is working';
+        } catch (e) {
+            document.getElementById('storageStatus').innerHTML = '❌ localStorage is blocked: ' + e.message;
+        }
+
+        let generatedLink = '';
+
+        function testGenerateLink() {
+            const debugInfo = document.getElementById('debugInfo');
+            debugInfo.innerHTML = '<p>🔄 Starting link generation...</p>';
+
+            try {
+                // Get values
+                const name = document.getElementById('testName').value.trim();
+                const message = document.getElementById('testMessage').value.trim();
+                const sender = document.getElementById('testSender').value.trim();
+
+                debugInfo.innerHTML += '<p>✅ Step 1: Got input values</p>';
+                debugInfo.innerHTML += `<p>   - Name: "${name}"</p>`;
+                debugInfo.innerHTML += `<p>   - Message: "${message}"</p>`;
+                debugInfo.innerHTML += `<p>   - Sender: "${sender}"</p>`;
+
+                // Validate
+                if (!name) {
+                    throw new Error('Name is required!');
+                }
+                debugInfo.innerHTML += '<p>✅ Step 2: Validation passed</p>';
+
+                // Create data object
+                const cardData = {
+                    name: name,
+                    message: message || 'Happy Birthday!',
+                    sender: sender || 'Your Loved Ones'
+                };
+                debugInfo.innerHTML += '<p>✅ Step 3: Created cardData object</p>';
+
+                // Encode data
+                const jsonString = JSON.stringify(cardData);
+                debugInfo.innerHTML += `<p>✅ Step 4: JSON string created (${jsonString.length} chars)</p>`;
+
+                const uriEncoded = encodeURIComponent(jsonString);
+                debugInfo.innerHTML += `<p>✅ Step 5: URI encoded (${uriEncoded.length} chars)</p>`;
+
+                const base64Encoded = btoa(uriEncoded);
+                debugInfo.innerHTML += `<p>✅ Step 6: Base64 encoded (${base64Encoded.length} chars)</p>`;
+
+                // Generate link
+                const currentUrl = window.location.href.split('?')[0].split('#')[0];
+                generatedLink = `${currentUrl}?magic=${base64Encoded}`;
+                debugInfo.innerHTML += '<p>✅ Step 7: Link generated successfully!</p>';
+
+                // Display result
+                document.getElementById('generatedLink').textContent = generatedLink;
+                document.getElementById('result').style.display = 'block';
+                debugInfo.innerHTML += '<p class="success">✅ ALL STEPS COMPLETED SUCCESSFULLY!</p>';
+
+                // Save to localStorage
+                try {
+                    localStorage.setItem('lastGeneratedLink', generatedLink);
+                    localStorage.setItem('lastCardData', JSON.stringify(cardData));
+                    debugInfo.innerHTML += '<p>✅ Saved to localStorage</p>';
+                } catch (e) {
+                    debugInfo.innerHTML += '<p>⚠️ Could not save to localStorage: ' + e.message + '</p>';
+                }
+
+                // Scroll to result
+                document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                debugInfo.innerHTML += `<p class="error">❌ ERROR: ${error.message}</p>`;
+                debugInfo.innerHTML += `<p class="error">Stack: ${error.stack}</p>`;
+                alert('Error: ' + error.message);
+            }
+        }
+
+        function copyTestLink() {
+            if (generatedLink) {
+                navigator.clipboard.writeText(generatedLink).then(() => {
+                    alert('✅ Link copied to clipboard!');
+                }).catch(err => {
+                    alert('❌ Could not copy: ' + err.message);
+                });
+            }
+        }
+
+        function openTestLink() {
+            if (generatedLink) {
+                window.open(generatedLink, '_blank');
+            }
+        }
+
+        // Auto-test on load
+        window.addEventListener('load', function() {
+            document.getElementById('debugInfo').innerHTML = '<p>✅ Page fully loaded and ready for testing</p>';
+        });
+    </script>
+</body>
+</html>

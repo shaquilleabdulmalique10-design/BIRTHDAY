@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Diagnostics</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #0F0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 { color: #FFD700; text-align: center; }
+        .test-section {
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid #0F0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .pass { color: #0F0; }
+        .fail { color: #F00; }
+        .warn { color: #FFA500; }
+        .info { color: #00BFFF; }
+        button {
+            background: #FFD700;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px 5px;
+        }
+        button:hover { background: #FFA500; }
+        .result { margin: 5px 0; padding: 5px; }
+        .code { background: rgba(255, 255, 255, 0.1); padding: 2px 5px; border-radius: 3px; }
+        #summary {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid #FFD700;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 BIRTHDAY WEBSITE DIAGNOSTICS</h1>
+    
+    <div style="text-align: center;">
+        <button onclick="runAllTests()">▶️ RUN ALL DIAGNOSTICS</button>
+        <button onclick="location.reload()">🔄 RESET</button>
+    </div>
+
+    <div id="summary" style="display: none;">
+        <h2 style="color: #FFD700;">📊 SUMMARY</h2>
+        <div id="summaryContent"></div>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        let testResults = {
+            passed: 0,
+            failed: 0,
+            warnings: 0
+        };
+
+        function log(message, type = 'info') {
+            const colors = {
+                pass: '#0F0',
+                fail: '#F00',
+                warn: '#FFA500',
+                info: '#00BFFF'
+            };
+            const icons = {
+                pass: '✅',
+                fail: '❌',
+                warn: '⚠️',
+                info: 'ℹ️'
+            };
+            
+            const div = document.createElement('div');
+            div.className = 'result';
+            div.style.color = colors[type];
+            div.innerHTML = `${icons[type]} ${message}`;
+            document.getElementById('results').appendChild(div);
+
+            if (type === 'pass') testResults.passed++;
+            if (type === 'fail') testResults.failed++;
+            if (type === 'warn') testResults.warnings++;
+        }
+
+        function section(title) {
+            const div = document.createElement('div');
+            div.className = 'test-section';
+            div.innerHTML = `<h2 style="color: #FFD700; margin: 0;">${title}</h2>`;
+            document.getElementById('results').appendChild(div);
+        }
+
+        async function runAllTests() {
+            document.getElementById('results').innerHTML = '';
+            testResults = { passed: 0, failed: 0, warnings: 0 };
+
+            // Test 1: Browser Environment
+            section('🌐 BROWSER ENVIRONMENT');
+            log(`Browser: ${navigator.userAgent}`, 'info');
+            log(`Platform: ${navigator.platform}`, 'info');
+            log(`Language: ${navigator.language}`, 'info');
+
+            // Test 2: JavaScript Features
+            section('⚙️ JAVASCRIPT FEATURES');
+            try {
+                // Test btoa/atob
+                const test = btoa('test');
+                atob(test);
+                log('btoa/atob encoding: WORKING', 'pass');
+            } catch (e) {
+                log(`btoa/atob encoding: FAILED - ${e.message}`, 'fail');
+            }
+
+            try {
+                // Test JSON
+                JSON.stringify({test: 'data'});
+                JSON.parse('{"test":"data"}');
+                log('JSON parsing: WORKING', 'pass');
+            } catch (e) {
+                log(`JSON parsing: FAILED - ${e.message}`, 'fail');
+            }
+
+            try {
+                // Test encodeURIComponent
+                encodeURIComponent('test data');
+                log('URI encoding: WORKING', 'pass');
+            } catch (e) {
+                log(`URI encoding: FAILED - ${e.message}`, 'fail');
+            }
+
+            // Test 3: localStorage
+            section('💾 LOCAL STORAGE');
+            try {
+                localStorage.setItem('diagnostic_test', 'test_value');
+                const value = localStorage.getItem('diagnostic_test');
+                if (value === 'test_value') {
+                    log('localStorage write/read: WORKING', 'pass');
+                } else {
+                    log('localStorage read returned wrong value', 'fail');
+                }
+                localStorage.removeItem('diagnostic_test');
+                log('localStorage delete: WORKING', 'pass');
+            } catch (e) {
+                log(`localStorage: BLOCKED - ${e.message}`, 'fail');
+                log('This will prevent data saving!', 'warn');
+            }
+
+            // Test 4: Check for required files
+            section('📁 FILE AVAILABILITY');
+            const files = [
+                'script.js',
+                'styles.css',
+                'navigation.js',
+                'generator.html',
+                'home.html'
+            ];
+
+            for (const file of files) {
+                try {
+                    const response = await fetch(file, { method: 'HEAD' });
+                    if (response.ok) {
+                        log(`${file}: FOUND`, 'pass');
+                    } else {
+                        log(`${file}: NOT FOUND (${response.status})`, 'fail');
+                    }
+                } catch (e) {
+                    log(`${file}: ERROR - ${e.message}`, 'fail');
+                }
+            }
+
+            // Test 5: DOM Elements (if on generator page)
+            section('🎯 DOM ELEMENTS');
+            const requiredElements = [
+                'celebrantNameInput',
+                'messageInput',
+                'senderInput',
+                'magicLinkDisplay',
+                'linkResult',
+                'generatorView',
+                'celebrantView',
+                'confetti-canvas',
+                'notificationContainer'
+            ];
+
+            let foundElements = 0;
+            for (const id of requiredElements) {
+                const element = document.getElementById(id);
+                if (element) {
+                    foundElements++;
+                } else {
+                    log(`Element #${id}: NOT FOUND (may be on different page)`, 'warn');
+                }
+            }
+
+            if (foundElements === 0) {
+                log('No generator elements found - you may be on the diagnostic page', 'info');
+                log('Open generator.html to test actual page elements', 'info');
+            } else {
+                log(`Found ${foundElements}/${requiredElements.length} elements`, 'info');
+            }
+
+            // Test 6: External Resources
+            section('🌍 EXTERNAL RESOURCES');
+            
+            // Check Tailwind CSS
+            try {
+                const response = await fetch('https://cdn.tailwindcss.com', { method: 'HEAD' });
+                if (response.ok) {
+                    log('Tailwind CSS CDN: ACCESSIBLE', 'pass');
+                } else {
+                    log('Tailwind CSS CDN: UNREACHABLE', 'warn');
+                }
+            } catch (e) {
+                log(`Tailwind CSS CDN: ERROR - ${e.message}`, 'warn');
+            }
+
+            // Check Font Awesome
+            try {
+                const response = await fetch('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css', { method: 'HEAD' });
+                if (response.ok) {
+                    log('Font Awesome CDN: ACCESSIBLE', 'pass');
+                } else {
+                    log('Font Awesome CDN: UNREACHABLE', 'warn');
+                }
+            } catch (e) {
+                log(`Font Awesome CDN: ERROR - ${e.message}`, 'warn');
+            }
+
+            // Test 7: Web Audio API
+            section('🎵 AUDIO CAPABILITIES');
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) {
+                    const ctx = new AudioContext();
+                    log('Web Audio API: SUPPORTED', 'pass');
+                    log(`Audio Context State: ${ctx.state}`, 'info');
+                    ctx.close();
+                } else {
+                    log('Web Audio API: NOT SUPPORTED', 'warn');
+                }
+            } catch (e) {
+                log(`Web Audio API: ERROR - ${e.message}`, 'warn');
+            }
+
+            // Test 8: Canvas
+            section('🎨 CANVAS (for confetti)');
+            try {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                if (ctx) {
+                    log('Canvas 2D: SUPPORTED', 'pass');
+                } else {
+                    log('Canvas 2D: NOT SUPPORTED', 'fail');
+                }
+            } catch (e) {
+                log(`Canvas: ERROR - ${e.message}`, 'fail');
+            }
+
+            // Test 9: Clipboard API
+            section('📋 CLIPBOARD');
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                log('Clipboard API: SUPPORTED', 'pass');
+            } else {
+                log('Clipboard API: NOT SUPPORTED (copy may not work)', 'warn');
+            }
+
+            // Test 10: Test Link Generation
+            section('🔗 LINK GENERATION TEST');
+            try {
+                const testData = {
+                    name: 'Test Person',
+                    message: 'Happy Birthday!',
+                    sender: 'Test Sender'
+                };
+                
+                const jsonString = JSON.stringify(testData);
+                log(`JSON created: ${jsonString.length} characters`, 'pass');
+                
+                const encoded = encodeURIComponent(jsonString);
+                log(`URI encoded: ${encoded.length} characters`, 'pass');
+                
+                const base64 = btoa(encoded);
+                log(`Base64 encoded: ${base64.length} characters`, 'pass');
+                
+                const link = `${window.location.origin}/generator.html?magic=${base64}`;
+                log(`Link generated: ${link.substring(0, 50)}...`, 'pass');
+                
+                // Test decoding
+                const decoded = JSON.parse(decodeURIComponent(atob(base64)));
+                if (decoded.name === testData.name) {
+                    log('Link decode test: PASSED', 'pass');
+                } else {
+                    log('Link decode test: FAILED', 'fail');
+                }
+            } catch (e) {
+                log(`Link generation test: FAILED - ${e.message}`, 'fail');
+            }
+
+            // Show summary
+            showSummary();
+        }
+
+        function showSummary() {
+            const summary = document.getElementById('summary');
+            const content = document.getElementById('summaryContent');
+            
+            const total = testResults.passed + testResults.failed + testResults.warnings;
+            const passRate = total > 0 ? Math.round((testResults.passed / total) * 100) : 0;
+            
+            let status = '✅ EXCELLENT';
+            let statusColor = '#0F0';
+            if (testResults.failed > 0) {
+                status = '❌ ISSUES FOUND';
+                statusColor = '#F00';
+            } else if (testResults.warnings > 3) {
+                status = '⚠️ WARNINGS';
+                statusColor = '#FFA500';
+            }
+            
+            content.innerHTML = `
+                <h3 style="color: ${statusColor}; margin: 10px 0;">${status}</h3>
+                <p style="color: #0F0;">✅ Passed: ${testResults.passed}</p>
+                <p style="color: #F00;">❌ Failed: ${testResults.failed}</p>
+                <p style="color: #FFA500;">⚠️ Warnings: ${testResults.warnings}</p>
+                <p style="color: #00BFFF;">📊 Pass Rate: ${passRate}%</p>
+                <hr style="border-color: #FFD700; margin: 15px 0;">
+                <h3 style="color: #FFD700;">🎯 NEXT STEPS:</h3>
+                ${testResults.failed === 0 ? 
+                    '<p style="color: #0F0;">✅ All critical tests passed! Open <strong>generator.html</strong> and try generating a link.</p>' :
+                    '<p style="color: #F00;">❌ Critical issues found. Check the failed tests above and fix them first.</p>'
+                }
+                ${testResults.warnings > 0 ?
+                    '<p style="color: #FFA500;">⚠️ Some warnings detected. The site may still work, but some features might be limited.</p>' :
+                    ''
+                }
+            `;
+            
+            summary.style.display = 'block';
+            summary.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Auto-run on load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                log('Diagnostic page loaded. Click "RUN ALL DIAGNOSTICS" to start testing.', 'info');
+            }, 500);
+        });
+    </script>
+</body>
+</html>

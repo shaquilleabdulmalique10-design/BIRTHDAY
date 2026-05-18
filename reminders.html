@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Reminders - Luxury Birthday</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="luxury-panel fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="home.html" class="flex items-center gap-2">
+                        <span class="text-2xl">✨</span>
+                        <span class="text-xl font-bold gold-text">Luxury Birthday</span>
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="home.html" class="nav-link">Home</a>
+                    <a href="generator.html" class="nav-link">Create Link</a>
+                    <a href="reminders.html" class="nav-link active">Reminders</a>
+                    <a href="gallery.html" class="nav-link">Gallery</a>
+                    <a href="about.html" class="nav-link">About</a>
+                </div>
+
+                <button class="md:hidden btn-gold px-3 py-2 rounded-lg" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden luxury-panel mt-2 mx-4 rounded-lg">
+            <div class="flex flex-col p-4 gap-2">
+                <a href="home.html" class="nav-link-mobile">Home</a>
+                <a href="generator.html" class="nav-link-mobile">Create Link</a>
+                <a href="reminders.html" class="nav-link-mobile active">Reminders</a>
+                <a href="gallery.html" class="nav-link-mobile">Gallery</a>
+                <a href="about.html" class="nav-link-mobile">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-24 pb-12 px-4 min-h-screen">
+        <div class="max-w-6xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <div class="text-6xl mb-4">🔔</div>
+                <h1 class="text-4xl sm:text-5xl font-bold gold-text glow-gold mb-4">
+                    Birthday Reminders
+                </h1>
+                <p class="text-lg" style="color: rgba(255, 215, 0, 0.8);">
+                    Never miss a birthday with email reminders
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Create Reminder Form -->
+                <div class="luxury-panel p-6">
+                    <h2 class="text-2xl font-bold mb-6" style="color: #FFD700;">
+                        <i class="fas fa-plus-circle"></i> Create New Reminder
+                    </h2>
+
+                    <form id="reminderForm" class="space-y-4">
+                        <!-- Your Email -->
+                        <div>
+                            <label class="block font-semibold mb-2 text-sm" style="color: #FFD700;">
+                                <i class="fas fa-envelope"></i> Your Email *
+                            </label>
+                            <input type="email" id="userEmail" required
+                                placeholder="your.email@example.com"
+                                class="luxury-input w-full px-4 py-3 rounded-lg">
+                            <p class="text-xs mt-1" style="color: rgba(255, 215, 0, 0.6);">
+                                We'll send reminder to this email
+                            </p>
+                        </div>
+
+                        <!-- Birthday Person's Name -->
+                        <div>
+                            <label class="block font-semibold mb-2 text-sm" style="color: #FFD700;">
+                                <i class="fas fa-user"></i> Birthday Person's Name *
+                            </label>
+                            <input type="text" id="birthdayName" required
+                                placeholder="e.g., Mom, Dad, John"
+                                class="luxury-input w-full px-4 py-3 rounded-lg">
+                        </div>
+
+                        <!-- Birthday Date -->
+                        <div>
+                            <label class="block font-semibold mb-2 text-sm" style="color: #FFD700;">
+                                <i class="fas fa-calendar"></i> Birthday Date *
+                            </label>
+                            <input type="date" id="birthdayDateInput" required
+                                class="luxury-input w-full px-4 py-3 rounded-lg">
+                        </div>
+
+                        <!-- Reminder Date -->
+                        <div>
+                            <label class="block font-semibold mb-2 text-sm" style="color: #FFD700;">
+                                <i class="fas fa-bell"></i> Send Reminder On *
+                            </label>
+                            <input type="date" id="reminderDateInput" required
+                                class="luxury-input w-full px-4 py-3 rounded-lg">
+                            <p class="text-xs mt-1" style="color: rgba(255, 215, 0, 0.6);">
+                                Choose a date before the birthday
+                            </p>
+                        </div>
+
+                        <!-- Optional Message -->
+                        <div>
+                            <label class="block font-semibold mb-2 text-sm" style="color: #FFD700;">
+                                <i class="fas fa-comment"></i> Optional Note
+                            </label>
+                            <textarea id="reminderNote" rows="2"
+                                placeholder="Add a personal note for yourself..."
+                                class="luxury-input w-full px-4 py-3 rounded-lg resize-none"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn-gold w-full py-3 rounded-lg font-bold">
+                            <i class="fas fa-paper-plane"></i> Set Email Reminder
+                        </button>
+                    </form>
+
+                    <!-- Info Box -->
+                    <div class="luxury-panel p-4 mt-6" style="background: rgba(255, 215, 0, 0.1);">
+                        <p class="text-sm" style="color: rgba(255, 215, 0, 0.8);">
+                            <i class="fas fa-info-circle"></i> 
+                            <strong>How it works:</strong> We'll send you an email reminder on your chosen date. 
+                            The email will include the birthday person's name and your note.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Active Reminders List -->
+                <div class="luxury-panel p-6">
+                    <h2 class="text-2xl font-bold mb-6" style="color: #FFD700;">
+                        <i class="fas fa-list"></i> Your Reminders
+                    </h2>
+
+                    <div id="remindersList">
+                        <!-- Reminders will be loaded here -->
+                    </div>
+
+                    <div id="noReminders" class="text-center py-12">
+                        <i class="fas fa-bell-slash text-6xl mb-4" style="color: rgba(255, 215, 0, 0.3);"></i>
+                        <p style="color: rgba(255, 215, 0, 0.6);">No reminders yet</p>
+                        <p class="text-sm mt-2" style="color: rgba(255, 215, 0, 0.5);">Create your first reminder!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Service Info -->
+            <div class="luxury-panel p-6 mt-8">
+                <h3 class="text-xl font-bold mb-4" style="color: #FFD700;">
+                    <i class="fas fa-shield-alt"></i> Email Reminder Service
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <h4 class="font-semibold mb-2" style="color: #FFD700;">✅ Reliable</h4>
+                        <p class="text-sm" style="color: rgba(255, 215, 0, 0.7);">
+                            Powered by EmailJS for guaranteed delivery
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-2" style="color: #FFD700;">🔒 Secure</h4>
+                        <p class="text-sm" style="color: rgba(255, 215, 0, 0.7);">
+                            Your email is stored locally and never shared
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-2" style="color: #FFD700;">⚡ Instant</h4>
+                        <p class="text-sm" style="color: rgba(255, 215, 0, 0.7);">
+                            Reminders sent automatically on your chosen date
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Management Section -->
+            <div class="luxury-panel p-6 mt-8">
+                <h3 class="text-xl font-bold mb-4" style="color: #FFD700;">
+                    <i class="fas fa-database"></i> Reminder Data Management
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <button onclick="exportReminderData()" class="btn-gold px-4 py-3 rounded-lg font-semibold">
+                        <i class="fas fa-download"></i> Export Reminders
+                    </button>
+                    <label class="btn-black px-4 py-3 rounded-lg font-semibold text-center cursor-pointer">
+                        <i class="fas fa-upload"></i> Import Reminders
+                        <input type="file" accept=".json" onchange="importReminderData(this)" class="hidden">
+                    </label>
+                    <button onclick="clearAllReminderData()" class="btn-black px-4 py-3 rounded-lg font-semibold">
+                        <i class="fas fa-trash"></i> Clear All Reminders
+                    </button>
+                </div>
+                <p class="text-sm mt-4" style="color: rgba(255, 215, 0, 0.6);">
+                    <i class="fas fa-info-circle"></i> All your reminders are automatically saved to local storage. Use the buttons above to backup or restore your data.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="fixed top-20 right-6 z-50 space-y-3 pointer-events-none"></div>
+
+    <script src="navigation.js"></script>
+    <script src="email-reminders.js"></script>
+</body>
+</html>

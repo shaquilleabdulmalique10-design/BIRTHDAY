@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Luxury Birthday</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="luxury-panel fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="home.html" class="flex items-center gap-2">
+                        <span class="text-2xl">✨</span>
+                        <span class="text-xl font-bold gold-text">Luxury Birthday</span>
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="home.html" class="nav-link">Home</a>
+                    <a href="generator.html" class="nav-link">Create Link</a>
+                    <a href="reminders.html" class="nav-link">Reminders</a>
+                    <a href="gallery.html" class="nav-link">Gallery</a>
+                    <a href="about.html" class="nav-link active">About</a>
+                </div>
+
+                <button class="md:hidden btn-gold px-3 py-2 rounded-lg" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden luxury-panel mt-2 mx-4 rounded-lg">
+            <div class="flex flex-col p-4 gap-2">
+                <a href="home.html" class="nav-link-mobile">Home</a>
+                <a href="generator.html" class="nav-link-mobile">Create Link</a>
+                <a href="reminders.html" class="nav-link-mobile">Reminders</a>
+                <a href="gallery.html" class="nav-link-mobile">Gallery</a>
+                <a href="about.html" class="nav-link-mobile active">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-24 pb-12 px-4 min-h-screen">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <div class="text-6xl mb-4">💎</div>
+                <h1 class="text-4xl sm:text-5xl font-bold gold-text glow-gold mb-4">
+                    About Luxury Birthday
+                </h1>
+                <p class="text-lg" style="color: rgba(255, 215, 0, 0.8);">
+                    Creating unforgettable birthday experiences
+                </p>
+            </div>
+
+            <!-- Story -->
+            <div class="luxury-panel p-8 mb-8">
+                <h2 class="text-2xl font-bold mb-4" style="color: #FFD700;">Our Story</h2>
+                <p class="mb-4" style="color: rgba(255, 215, 0, 0.8);">
+                    Luxury Birthday was created with a simple mission: to make every birthday celebration special and memorable. 
+                    We believe that birthdays are more than just dates on a calendar—they're opportunities to show love, 
+                    appreciation, and create lasting memories.
+                </p>
+                <p style="color: rgba(255, 215, 0, 0.8);">
+                    Our platform combines stunning design, modern technology, and heartfelt personalization to deliver 
+                    birthday experiences that truly stand out. Whether it's for family, friends, or colleagues, 
+                    we help you create moments that will be remembered forever.
+                </p>
+            </div>
+
+            <!-- Features -->
+            <div class="luxury-panel p-8 mb-8">
+                <h2 class="text-2xl font-bold mb-6" style="color: #FFD700;">What Makes Us Special</h2>
+                <div class="space-y-4">
+                    <div class="flex gap-4">
+                        <div class="text-3xl">🎨</div>
+                        <div>
+                            <h3 class="font-bold mb-1" style="color: #FFD700;">Luxury Design</h3>
+                            <p style="color: rgba(255, 215, 0, 0.7);">
+                                Premium glassmorphic design with gold and black theme that exudes elegance
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="text-3xl">🎵</div>
+                        <div>
+                            <h3 class="font-bold mb-1" style="color: #FFD700;">Real Music</h3>
+                            <p style="color: rgba(255, 215, 0, 0.7);">
+                                Authentic birthday songs with beautiful animations and effects
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="text-3xl">📧</div>
+                        <div>
+                            <h3 class="font-bold mb-1" style="color: #FFD700;">Email Reminders</h3>
+                            <p style="color: rgba(255, 215, 0, 0.7);">
+                                Never miss a birthday with our intelligent email reminder system
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="text-3xl">🌐</div>
+                        <div>
+                            <h3 class="font-bold mb-1" style="color: #FFD700;">Worldwide Access</h3>
+                            <p style="color: rgba(255, 215, 0, 0.7);">
+                                Share birthday links with anyone, anywhere in the world
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technology -->
+            <div class="luxury-panel p-8 mb-8">
+                <h2 class="text-2xl font-bold mb-4" style="color: #FFD700;">Technology</h2>
+                <p class="mb-4" style="color: rgba(255, 215, 0, 0.8);">
+                    Built with modern web technologies for the best performance and user experience:
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center p-4 luxury-panel">
+                        <div class="text-2xl mb-2">⚡</div>
+                        <p class="text-sm" style="color: #FFD700;">Fast Loading</p>
+                    </div>
+                    <div class="text-center p-4 luxury-panel">
+                        <div class="text-2xl mb-2">📱</div>
+                        <p class="text-sm" style="color: #FFD700;">Responsive</p>
+                    </div>
+                    <div class="text-center p-4 luxury-panel">
+                        <div class="text-2xl mb-2">🔒</div>
+                        <p class="text-sm" style="color: #FFD700;">Secure</p>
+                    </div>
+                    <div class="text-center p-4 luxury-panel">
+                        <div class="text-2xl mb-2">🎨</div>
+                        <p class="text-sm" style="color: #FFD700;">Beautiful</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="text-center luxury-panel p-8">
+                <h2 class="text-2xl font-bold mb-4" style="color: #FFD700;">Ready to Get Started?</h2>
+                <p class="mb-6" style="color: rgba(255, 215, 0, 0.8);">
+                    Create your first luxury birthday experience today
+                </p>
+                <a href="generator.html" class="btn-gold px-8 py-4 rounded-full text-lg font-bold inline-flex items-center gap-2">
+                    <i class="fas fa-rocket"></i> Create Birthday Link
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="navigation.js"></script>
+</body>
+</html>
